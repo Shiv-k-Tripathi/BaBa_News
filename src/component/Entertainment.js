@@ -69,13 +69,13 @@ export default class Entertainment extends Component {
             page: 1
         }
     }
-    // async componentDidMount() {
-    //     let url = "https://newsapi.org/v2/top-headlines?country=in&category=Entertainment&apiKey=2fdb0b08af084481b1cd2c226739c437";
-    //     let data = await fetch(url);
-    //     let filterData = await data.json();
-    //     console.log(filterData);
-    //     this.setState({ article: filterData.articles, totalResults: filterData.totalResults });
-    // }
+    async componentDidMount() {
+        let url = "https://newsapi.org/v2/top-headlines?country=in&category=Entertainment&apiKey=2fdb0b08af084481b1cd2c226739c437";
+        let data = await fetch(url);
+        let filterData = await data.json();
+        console.log(filterData);
+        this.setState({ article: filterData.articles, totalResults: filterData.totalResults });
+    }
     privious = async () => {
         console.log('privious');
         let url = `https://newsapi.org/v2/top-headlines?country=in&category=Entertainment&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page - 1}&pageSize=9`;
@@ -93,8 +93,6 @@ export default class Entertainment extends Component {
 
         }
         else {
-
-
             let url = `https://newsapi.org/v2/top-headlines?country=in&category=Entertainment&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page + 1}&pageSize=9`;
             let data = await fetch(url);
             let filterData = await data.json();

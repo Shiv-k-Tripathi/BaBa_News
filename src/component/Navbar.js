@@ -1,12 +1,14 @@
 // import PropTypes from 'prop-types'
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-
+// import News from './News';
+ 
 export default class Navbar extends Component {
+    const 
     constructor() {
         super();
         this.state = {
-            searchtext: "",
+            searchtext: "ram",
         }
     }
     onchenge=(e)=>{
@@ -17,7 +19,7 @@ export default class Navbar extends Component {
     }
     render() {
         return (
-            <div>
+            <>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light"  >
                     <div className="container-fluid">
                         <Link className="navbar-brand" to="/">BaBa$News</Link>
@@ -47,7 +49,8 @@ export default class Navbar extends Component {
                         </div>
                     </div>
                 </nav>
-            </div>
+                {/* <News  value={this.props.state}/> */}
+            </>
         )
     }
 }

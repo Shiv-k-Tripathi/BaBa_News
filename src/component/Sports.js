@@ -65,16 +65,43 @@ export default class Sports extends Component {
     constructor() {
         super();
         this.state = {
-            article: this.articles
+            article: this.articles,
+            page:1
         }
     }
-    //  async componentDidMount(){
-    //     let url="https://newsapi.org/v2/top-headlines?country=in&category=sport&apiKey=2fdb0b08af084481b1cd2c226739c437";
-    //     let data =await fetch(url);
-    //     let filterData= await data.json();
-    //     console.log(filterData);
-    //     this.setState({article : filterData.articles});
-    // }
+    async componentDidMount() {
+        let url = "https://newsapi.org/v2/top-headlines?country=in&category=sport&apiKey=2fdb0b08af084481b1cd2c226739c437";
+        let data = await fetch(url);
+        let filterData = await data.json();
+        console.log(filterData);
+        this.setState({ article: filterData.articles, totalResults: filterData.totalResults });
+    }
+    privious = async () => {
+        console.log('privious');
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=sport&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page - 1}&pageSize=9`;
+        let data = await fetch(url);
+        let filterData = await data.json();
+        console.log(filterData);
+        this.setState({ article: filterData.articles, });
+        this.setState({
+            page: this.state.page - 1
+        })
+    }
+    next = async () => {
+        console.log('next');
+        if (this.state.page + 1 > Math.ceil(this.state.totalResults / 9)) {
+        }
+        else {
+            let url = `https://newsapi.org/v2/top-headlines?country=in&category=sport&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page + 1}&pageSize=9`;
+            let data = await fetch(url);
+            let filterData = await data.json();
+            console.log(filterData);
+            this.setState({ article: filterData.articles });
+            this.setState({
+                page: this.state.page + 1
+            })
+        }
+    }
     render() {
         var cs = {
             //  backgroundColor: 'black',
@@ -90,7 +117,11 @@ export default class Sports extends Component {
                                 <NewsItem title={e.title ? e.title.slice(0, 40) : ""} discription={e.description ? e.description.slice(0, 80) : ""} imgUrl={e.urlToImage} newsUrl={e.url} />
                             </div>
                         })}
-                        {/* <button onClick={} className="btn btn-primary">dark mode</button> */}
+                      
+                    </div>
+                    <div className="container d-flex justify-content-between my-5">
+                        <button disabled={this.state.page <= 1} className='btn btn-dark' onClick={this.privious}>&larr; Previous </button>
+                        <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / 9)} className='btn btn-dark' onClick={this.next}>Next &rarr; </button>
                     </div>
                 </div>
             </>

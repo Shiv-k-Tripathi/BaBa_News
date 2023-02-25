@@ -66,16 +66,16 @@ export class News extends Component {
         super();
         this.state = {
             article: this.articles,
-            page: 1
+            page: 1,
         }
     }
-    // async componentDidMount() {
-    //     let url = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=2fdb0b08af084481b1cd2c226739c437";
-    //     let data = await fetch(url);
-    //     let filterData = await data.json();
-    //     console.log(filterData);
-    //     this.setState({ article: filterData.articles,totalResult: filterData.totalResult  });
-    // }
+    async componentDidMount() {
+        let url = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=2fdb0b08af084481b1cd2c226739c437";
+        let data = await fetch(url);
+        let filterData = await data.json();
+        console.log(filterData);
+        this.setState({ article: filterData.articles, totalResults: filterData.totalResults });
+    }
     privious = async () => {
         console.log('privious');
         let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page - 1}&pageSize=9`;
@@ -89,8 +89,7 @@ export class News extends Component {
     }
     next = async () => {
         console.log('next');
-        if (this.state.page + 1 > Math.ceil(this.state.totalResult/9)) {
-
+        if (this.state.page + 1 > Math.ceil(this.state.totalResults / 9)) {
         }
         else {
             let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page + 1}&pageSize=9`;
@@ -103,6 +102,7 @@ export class News extends Component {
             })
         }
     }
+    
     render() {
         var cs = {
             //  backgroundColor: 'black',
@@ -114,6 +114,7 @@ export class News extends Component {
             <>
                 <div className='container ' style={cs}>
                     <div className='row '>
+                        <h1>{this.props.searchtext}</h1>
                         <h1 className='text-center'>BaBa Hot News</h1>
                         {this.state.article.map((e) => {
                             return <div className='col-md-4 ' key={e.url} >
@@ -123,7 +124,7 @@ export class News extends Component {
                     </div>
                     <div className="container d-flex justify-content-between my-5">
                         <button disabled={this.state.page <= 1} className='btn btn-dark' onClick={this.privious}>&larr; Previous </button>
-                        <button  className='btn btn-dark' onClick={this.next}>Next &rarr; </button>
+                        <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / 9)} className='btn btn-dark' onClick={this.next}>Next &rarr; </button>
                     </div>
                 </div>
             </>
