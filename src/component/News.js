@@ -70,36 +70,42 @@ export class News extends Component {
         }
     }
     async componentDidMount() {
-        let url = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=2fdb0b08af084481b1cd2c226739c437";
+        let url = "https://newsapi.org/v2/everything?q=tesla&from=2024-12-17&sortBy=publishedAt&apiKey=2fdb0b08af084481b1cd2c226739c437";
         let data = await fetch(url);
         let filterData = await data.json();
-        console.log(filterData);
-        this.setState({ article: filterData.articles, totalResults: filterData.totalResults });
+        console.log('filterData ::::',filterData);
+        if (filterData && filterData.articles && filterData.articles.length) {
+            this.setState({ article: filterData.articles, totalResults: filterData.totalResults });
+        }
     }
     privious = async () => {
         console.log('privious');
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page - 1}&pageSize=9`;
+        let url = `https://newsapi.org/v2/everything?q=tesla&from=2024-12-17&sortBy=publishedAt&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page - 1}&pageSize=9`;
         let data = await fetch(url);
         let filterData = await data.json();
         console.log(filterData);
-        this.setState({ article: filterData.articles, });
-        this.setState({
-            page: this.state.page - 1
-        })
+        if (filterData && filterData.articles && filterData.articles.length) {
+            this.setState({ article: filterData.articles, });
+            this.setState({
+                page: this.state.page - 1
+            })
+        }
     }
     next = async () => {
         console.log('next');
         if (this.state.page + 1 > Math.ceil(this.state.totalResults / 9)) {
         }
         else {
-            let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page + 1}&pageSize=9`;
+            let url = `https://newsapi.org/v2/everything?q=tesla&from=2024-12-17&sortBy=publishedAt&apiKey=2fdb0b08af084481b1cd2c226739c437&page=${this.state.page + 1}&pageSize=9`;
             let data = await fetch(url);
             let filterData = await data.json();
             console.log(filterData);
-            this.setState({ article: filterData.articles });
-            this.setState({
-                page: this.state.page + 1
-            })
+            if (filterData && filterData.articles && filterData.articles.length) {
+                this.setState({ article: filterData.articles });
+                this.setState({
+                    page: this.state.page + 1
+                })
+            }
         }
     }
     
