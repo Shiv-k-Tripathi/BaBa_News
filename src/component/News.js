@@ -116,7 +116,7 @@ export class News extends Component {
                     <div className='row '>
                         <h1>{this.props.searchtext}</h1>
                         <h1 className='text-center'>BaBa Hot News</h1>
-                        {this.state.article.map((e) => {
+                        {this.state.article && this.state.article.length && this.state.article.map((e) => {
                             return <div className='col-md-4 ' key={e.url} >
                                 <NewsItem title={e.title ? e.title.slice(0, 40) : ""} discription={e.description ? e.description.slice(0, 80) : ""} imgUrl={e.urlToImage} newsUrl={e.url} />
                             </div>
